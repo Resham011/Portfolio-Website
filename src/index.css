@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth theme switching */
+html {
+  @apply transition-colors duration-300;
+}
+
+/* Custom scrollbar (optional) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-purple-600 rounded-full;
+}
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-purple-400;
+}
+
+.purple-shadow {
+  box-shadow: 7px 7px 7px rgba(58, 22, 109, 0.5);
+}
