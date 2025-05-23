@@ -1,66 +1,3 @@
-// import React, { useContext } from "react";
-// import { ThemeContext } from "../context/ThemeContext";
-
-// const TechStack = () => {
-//   const { theme } = useContext(ThemeContext);
-
-//   const categories = [
-//     {
-//       title: "Languages",
-//       items: ["Java", "C++", "JavaScript", "HTML", "CSS", "Python(Basics)", "OOPs"],
-//     },
-//     {
-//       title: "Frontend",
-//       items: ["React", "Vite", "Tailwind CSS"],
-//     },
-//     {
-//       title: "Backend",
-//       items: ["Node.js", "Express", "MongoDB", "Atlas"],
-//     },
-//     {
-//       title: "Tools & Others",
-//       items: ["Git", "GitHub", "VS Code", "Figma", "Postman", "MongoDB"],
-//     },
-//   ];
-
-//   return (
-//     <section id="skills"
-//       className="w-full py-12 px-6 md:px-12 lg:px-20 transition-colors duration-500"
-//     >
-//       <h2 className="text-3xl font-bold text-center mb-10 dark:text-white">
-//         Skills & Tech Stack
-//       </h2>
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-//         {categories.map((category, idx) => (
-//           <div
-//             key={idx}
-//             className={`rounded-2xl p-6 transition-all duration-300 transform hover:scale-105 
-//               ${theme === "light" ? "bg-gray-200 text-gray-800 purple-shadow " : "bg-gray-800 text-white shadow-[3px_3px_8px_rgba(190,144,255,0.4)] "}`}
-
-//           >
-//             <h3 className="text-xl font-semibold mb-4 border-b pb-2 border-gray-400 dark:border-gray-600">
-//               {category.title}
-//             </h3>
-//             <ul className="space-y-2">
-//               {category.items.map((item, index) => (
-//                 <li
-//                   key={index}
-//                   className="text-sm font-medium px-3 py-1 rounded hover:bg-purple-600 transition-colors duration-200"
-//                 >
-//                   {item}
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-//         ))}
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default TechStack;
-
-
 import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -94,7 +31,7 @@ const TechStack = () => {
       <h2 className="text-3xl font-bold text-center mb-12 dark:text-white animate-fade-in-down">
         Skills & Tech Stack
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
         {categories.map((category, idx) => (
           <div
             key={idx}
@@ -134,4 +71,3 @@ const TechStack = () => {
 };
 
 export default TechStack;
-
