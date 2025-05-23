@@ -30,7 +30,7 @@ export default function Hero() {
           {/* Contact and Resume buttons side by side */}
           <div className="flex space-x-4">
             <a
-              href="#contact"
+              href="contact"
               className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition"
             >
               Contact Me

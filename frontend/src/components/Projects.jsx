@@ -20,8 +20,8 @@ const projects = [
     image: project2,
     description: "A personal portfolio showcasing skills, projects, and contact information with a clean, responsive design.",
     tech: ["Vite", "Express", "React", "HTML", "Tailwind Css"],
-    liveLink: "https://your-portfolio.com",
-    githubLink: "https://github.com/your-portfolio",
+    liveLink: "https://portfolio-frontend-bse0.onrender.com/",
+    githubLink: "https://github.com/Resham011/Portfolio-Website",
   },
   {
     title: "Tic-Tac-Toe Game",

@@ -68,7 +68,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-12">
           {/* Logo */}
-          <motion.div whileHover={{ scale: 1.05 }} className="text-xl font-m dark:text-white">
+          <motion.div whileHover={{ scale: 1.05 }} className="text-xl font-bold dark:text-white">
             Resham
           </motion.div>
 
