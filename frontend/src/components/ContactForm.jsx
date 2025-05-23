@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+     
+     const [formData, setFormData] = useState({
+          name: "",
+          email: "",
+          message: "",
+     });
 
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,14 +29,13 @@ export default function ContactForm() {
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/send-email`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+     setIsLoading(true);
+     try {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/send-email`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+     });
 
       const data = await response.json();
 
@@ -46,14 +46,17 @@ export default function ContactForm() {
         setStatus(data.message || "Something went wrong.");
       }
     } catch (error) {
-      setStatus("Failed to send message. Please try again later.");
-    }
+          console.log("Full error:", error);
+          console.log("Error response:", await error.response?.text());
+          setStatus("Failed to send message. Please try again later.");
+     }
 
     setIsLoading(false);
   };
 
   return (
     <section id="contact" className="py-20 bg-white dark:bg-gray-900 transition duration-300">
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold text-center mb-16 dark:text-white animate-fade-in-down">
           Contact Me
