@@ -36,7 +36,7 @@ export default function Hero() {
               Contact Me
             </a>
             <a
-              href="https://drive.google.com/file/d/1XVMWtuTGgiTCVqXYMu5BS4QqEQkHJyQE/view?usp=sharing" // Replace with your actual resume file path or external link
+              href="https://drive.google.com/file/d/1PEp5RaMdTO0ZT1b08AQ4Cf6rN11yr1h1/view?usp=sharing" // Replace with your actual resume file path or external link
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition"
