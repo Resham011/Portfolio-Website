@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -8,18 +8,35 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef(null);
+  const hamburgerRef = useRef(null);
 
-     useEffect(() => {
-          const handleScroll = () => {
-          setIsScrolled(window.scrollY > 10);
-          if (mobileMenuOpen) {
-               setMobileMenuOpen(false);
-          }
-          };
-          window.addEventListener("scroll", handleScroll);
-          return () => window.removeEventListener("scroll", handleScroll);
-          }, [mobileMenuOpen]
-     );
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+      if (mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [mobileMenuOpen]);
+
+  // Add click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (mobileMenuOpen && 
+          !mobileMenuRef.current?.contains(event.target) && 
+          !hamburgerRef.current?.contains(event.target)) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { name: "Home", id: "home" },
@@ -37,7 +54,6 @@ const Navbar = () => {
     }
   };
 
-  // Get dynamic background classes
   const getBackgroundClasses = () => {
     if (!isScrolled) {
       return theme === "light" ? "bg-transparent" : "bg-transparent";
@@ -48,22 +64,22 @@ const Navbar = () => {
 
   return (
     <motion.nav
-          initial={{ opacity: 0, y: -20 }}
-          animate={{
-          opacity: 1,
-          y: 0,
-          backgroundColor: isScrolled ? theme === "light" ? 
-          "rgba(255, 255, 255, 0.95)"
-          : "rgba(17, 24, 39, 0.95)"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        backgroundColor: isScrolled
+          ? theme === "light"
+            ? "rgba(255, 255, 255, 0.95)"
+            : "rgba(17, 24, 39, 0.95)"
           : theme === "light"
           ? "rgba(255, 255, 255, 0.1)"
           : "rgba(17, 24, 39, 0.1)",
-
-          }}
-          transition={{ duration: 0.3 }}
-          className={`fixed w-full z-50 py-3 backdrop-blur-sm shadow-sm ${
-          isScrolled ? "border-b border-gray-200 dark:border-gray-700" : ""
-          }`}
+      }}
+      transition={{ duration: 0.3 }}
+      className={`fixed w-full z-50 py-3 backdrop-blur-sm shadow-sm ${
+        isScrolled ? "border-b border-gray-200 dark:border-gray-700" : ""
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-12">
@@ -73,7 +89,7 @@ const Navbar = () => {
           </motion.div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex space-x-3 ">
+          <div className="hidden md:flex space-x-3">
             {navLinks.map((link) => (
               <motion.button
                 key={link.id}
@@ -98,35 +114,38 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Theme Toggle */}
-          <div className="hidden md:flex items-center space-x-3">
-            <motion.button
-              onClick={toggleTheme}
-              className={`p-2 rounded-full transition-colors duration-500 ${
-                theme === "light" ? "hover:bg-gray-200" : "hover:bg-gray-700"
-              }`}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              aria-label="Toggle theme"
-            >
-              {theme === "light" ? (
-                <FaMoon className="text-gray-800 transition-colors duration-500" />
-              ) : (
-                <FaSun className="text-gray-200 transition-colors duration-500" />
-              )}
-            </motion.button>
-          </div>
+          {/* Theme Toggle and Hamburger */}
+          <div className="flex items-center space-x-3">
+            <div className="hidden md:flex">
+              <motion.button
+                onClick={toggleTheme}
+                className={`p-2 rounded-full transition-colors duration-500 ${
+                  theme === "light" ? "hover:bg-gray-200" : "hover:bg-gray-700"
+                }`}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Toggle theme"
+              >
+                {theme === "light" ? (
+                  <FaMoon className="text-gray-800 transition-colors duration-500" />
+                ) : (
+                  <FaSun className="text-gray-200 transition-colors duration-500" />
+                )}
+              </motion.button>
+            </div>
 
-          {/* Hamburger Icon */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`text-2xl transition-all duration-300 ${
-                theme === "light" ? "text-gray-900" : "text-white"
-              }`}
-            >
-              {mobileMenuOpen ? <FaTimes /> : <FaBars />}
-            </button>
+            {/* Hamburger Icon */}
+            <div className="md:hidden flex items-center">
+              <button
+                ref={hamburgerRef}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className={`text-2xl transition-all duration-300 ${
+                  theme === "light" ? "text-gray-900" : "text-white"
+                }`}
+              >
+                {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -134,6 +153,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div
+          ref={mobileMenuRef}
           className={`md:hidden px-6 py-4 space-y-3 transition-all duration-300 ${getBackgroundClasses()}`}
         >
           {navLinks.map((link) => (
@@ -156,7 +176,9 @@ const Navbar = () => {
           <button
             onClick={toggleTheme}
             className={`w-full flex justify-center items-center px-4 py-2 rounded transition-colors duration-300 ${
-              theme === "light" ? "bg-gray-200 hover:bg-gray-300 text-black" : "bg-gray-700 hover:bg-gray-600 text-white"
+              theme === "light"
+                ? "bg-gray-200 hover:bg-gray-300 text-black"
+                : "bg-gray-700 hover:bg-gray-600 text-white"
             }`}
           >
             {theme === "light" ? (
@@ -178,4 +200,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
